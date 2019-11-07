@@ -1,0 +1,108 @@
+<template lang="pug">
+  BaseLayout(tab1="Todo" tab2="Done")
+
+    template(v-slot:tab1)
+      v-btn.mt-3.mr-3.grey.lighten-4(@click.stop="dialog = true" rounded) 
+        v-icon(x-small) fa-plus
+        span.ml-3 Create
+      
+      v-dialog(v-model="dialog" max-width="600")
+        v-card
+          v-card-title Create ToDo
+          v-card-text
+            v-text-field(label="Title" v-model="newTodo.title" required)
+            v-text-field(label="Content" v-model="newTodo.content" required)
+            dateTimePicker(ref="datetime")
+          v-card-actions
+            v-col(col=12 xs=6)
+              v-btn.grey.lighten-4(text large @click="cancel") Cancel
+            v-col(col=12 xs=6)
+              v-btn.primary(text large @click="create") Create
+
+      v-flex.justify-center
+        template(v-for="t in todo")
+          TodoCard.mt-3(:data="t" @submit="editToDo" @delete="del" withCardColor=true btn_text="Done")
+
+    template(v-slot:tab2)
+      v-flex.justify-center
+        template(v-for="d in done")
+          TodoCard.mt-3(:data="d" @submit="editToDo" @delete="del" btn_text="ToDo")
+</template>
+
+<style scoped>
+  .v-card__actions{
+    padding: 0;
+  }
+  .v-card__actions .col{
+    padding: 0;
+  }
+  .v-card__actions .col .v-btn{
+    border-radius: 0;
+    width: 100%
+  }
+</style>
+
+<script>
+import _ from 'lodash'
+import BaseLayout from"../components/BaseLayout.vue"
+import dateTimePicker from"../components/dateTimePicker.vue"
+import TodoCard from"../components/TodoCard.vue"
+
+export default {
+  components: {
+    BaseLayout,
+    dateTimePicker,
+    TodoCard,
+  },
+  data() {
+    return {
+      user: this.$store.state.auth.user,
+      dialog: false,
+      newTodo: {
+        title: "",
+        content: "",
+        deadline: null
+      }
+    }
+  },
+  computed: {
+    todo() {
+      return this.$store.state.auth.tasks.todo
+    },
+    done() {
+      return this.$store.state.auth.tasks.done
+    },
+  },
+  methods: {
+    async editToDo(todo_id) {
+      await this.$store.dispatch('auth/edit', _.assign(
+          this.user, {todo_id: todo_id}
+        ))
+      this.$router.push('/todo')
+    },
+    async del(todo_id) {
+      await this.$store.dispatch('auth/delete', _.assign(
+          this.user, {todo_id: todo_id}
+        ))
+      this.$router.push('/todo')
+    },
+    async create() {
+      this.newTodo.deadline = this.$refs.datetime.datetime
+      await this.$store.dispatch('auth/createTodo', _.assign(
+          this.user, {todo: this.newTodo}
+        ))
+      this.dialog = false
+      this.initNewTodo()
+    },
+    cancel() {
+      this.dialog = false
+      this.initNewTodo()
+    },
+    initNewTodo() {
+      this.newTodo.title = ""
+      this.newTodo.content = ""
+      this.$refs.datetime.initDateAndTime()
+    }
+  }
+}
+</script>

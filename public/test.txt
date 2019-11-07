@@ -1,0 +1,19 @@
+POST /api/login HTTP/1.1
+Accept:           application/json, text/plain, */*
+Accept-Encoding:  gzip, deflate, br
+Accept-Language:  en-GB,en;q=0.9,en-US;q=0.8,ja;q=0.7
+Connection:       keep-alive
+Content-Length:   45
+Content-Type:     application/json;charset=UTF-8
+Cookie:           XSRF-TOKEN=eyJpdiI6IkJLcGFLd3Z2K0Nab3BHR3VOTDV0Z2c9PSIsInZhbHVlIjoiT3I5elh5SnB4NTY2azNwZ0Q0R0R3UW1ndTM3cmRiSjF4Y1wvXC9mSE95dGVNVm9Hd1BKQytHWm96M0dGV2JUOFwvVSIsIm1hYyI6ImNkNzg3NzQ0YzNiMmI5MjI5YmFjNDE2MDI1MmNlZDI1ZDAxZGYzYTI4ODZiZjk3NGU1MWQ5ODkzOTc1OWVkYzIifQ%3D%3D; laravel_session=eyJpdiI6ImZTbWlXaGtQckdwZnhXa2NqeGRYTkE9PSIsInZhbHVlIjoiQ21KSHkyMERYTDRITVJKXC9zbEhDbHFldmQ0clwvTU1GdHFlUTh0RkMweDZ5UFNpUFZNSW54TkJ2dW53dnE1RHFsIiwibWFjIjoiY2QyODBjY2MzNDFkY2IzOWQzMzhjZjMyNjVkZDk3NWFhOGViNjZlZjU4YmRiZDUxNzIyYmIzYTJiMDkyOTJjZiJ9
+Host:             127.0.0.1:8000
+Origin:           http://127.0.0.1:8000
+Referer:          http://127.0.0.1:8000/login
+Sec-Fetch-Mode:   cors
+Sec-Fetch-Site:   same-origin
+User-Agent:       Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.70 Safari/537.36
+X-Requested-With: XMLHttpRequest
+X-Xsrf-Token:     eyJpdiI6IkJLcGFLd3Z2K0Nab3BHR3VOTDV0Z2c9PSIsInZhbHVlIjoiT3I5elh5SnB4NTY2azNwZ0Q0R0R3UW1ndTM3cmRiSjF4Y1wvXC9mSE95dGVNVm9Hd1BKQytHWm96M0dGV2JUOFwvVSIsIm1hYyI6ImNkNzg3NzQ0YzNiMmI5MjI5YmFjNDE2MDI1MmNlZDI1ZDAxZGYzYTI4ODZiZjk3NGU1MWQ5ODkzOTc1OWVkYzIifQ==
+Cookie: XSRF-TOKEN=N5fYw6CmNXOePI2410XteDfvVfeQdQX3id53t17l; laravel_session=OJnlzr6wFCWvQKfg8ccPFchKFT4WgccD7QcwxHN7
+
+{"email":"aaa@aaa.aaa","password":"aaaaaaaa"}
