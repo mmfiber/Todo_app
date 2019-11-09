@@ -1,5 +1,5 @@
 <template lang="pug">
-  v-dialog(v-model="dialog" max-width="600")
+  v-dialog(:value="dialog" @click:outside="cancel" max-width="600")
     v-card
       v-card-title {{ title }}
       v-card-text
