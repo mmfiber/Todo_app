@@ -44,7 +44,8 @@
 export default {
   props: {
     tab1: String,
-    tab2: String
+    tab2: String,
+    initDatetime: {type: String , default: ""},
   },
   data() {
     return {
@@ -55,7 +56,11 @@ export default {
   },
   computed: {
     datetime() {
-      return !this.date && !this.time ? null : this.date + " " + this.time
+      if ( this.initDatetime && !this.date && !this.time ) {
+        return this.initDatetime
+      } else {
+        return !this.date && !this.time ? null : this.date + " " + this.time
+      }
     }
   },
   methods: {

@@ -17,7 +17,7 @@
         btnText="edit" btnColorClass="success" @cancel="cancel" @submit="edit")
       v-text-field(label="Title" v-model="editData.title" required)
       v-text-field(label="Content" v-model="editData.content" required)
-      dateTimePicker(ref="datetime")
+      dateTimePicker(:initDatetime="editData.deadline" ref="datetime")
 
     Dialog(v-model="delDialog" title="Are you sure delete this?"
         btnText="delete" btnColorClass="error" @cancel="cancel" @submit="del")
@@ -84,6 +84,7 @@ export default {
     async edit() {
       this.editData.deadline = this.$refs.datetime.datetime
       await this.$emit('edit', this.editData)
+      this.$refs.datetime.initDateAndTime()
       this.editDialog = false
       this.getCardColor()
     },
