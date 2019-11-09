@@ -8,26 +8,21 @@
             v-icon(x-small) fa-plus
             span.ml-3 Create
           template(v-for="t in todo")
-            TodoCard.mt-3(:data="t" @submit="editToDo" @delete="del" withCardColor=true btn_text="Done")
+            TodoCard.mt-3(:data="t" withCardColor=true btn_text="Done"
+                @changeState="changeState" @edit="editToDo" @delete="del")
 
-      v-dialog(v-model="dialog" max-width="600")
-        v-card
-          v-card-title Create ToDo
-          v-card-text
-            v-text-field(label="Title" v-model="newTodo.title" required)
-            v-text-field(label="Content" v-model="newTodo.content" required)
-            dateTimePicker(ref="datetime")
-          v-card-actions
-            v-col(col=12 xs=6)
-              v-btn.grey.lighten-4(text large @click="cancel") Cancel
-            v-col(col=12 xs=6)
-              v-btn.primary(text large @click="create") Create
+      Dialog(v-model="dialog" title="Create ToDo"
+          btnText="Create" btnColorClass="primary" @cancel="cancel" @submit="create")
+        v-text-field(label="Title" v-model="newTodo.title" required)
+        v-text-field(label="Content" v-model="newTodo.content" required)
+        dateTimePicker(ref="datetime")
 
     template(v-slot:tab2)
       v-row.justify-center
         v-col(col=12 xs=12 md=8)
           template(v-for="d in done")
-            TodoCard.mt-3(:data="d" @submit="editToDo" @delete="del" btn_text="ToDo")
+            TodoCard.mt-3(:data="d" btn_text="ToDo"
+                @changeState="changeState" @edit="editToDo" @delete="del")
 
 </template>
 
@@ -49,12 +44,14 @@ import _ from 'lodash'
 import BaseLayout from"../components/BaseLayout.vue"
 import dateTimePicker from"../components/dateTimePicker.vue"
 import TodoCard from"../components/TodoCard.vue"
+import Dialog from"../components/Dialog.vue"
 
 export default {
   components: {
     BaseLayout,
     dateTimePicker,
     TodoCard,
+    Dialog,
   },
   data() {
     return {
@@ -76,8 +73,13 @@ export default {
     },
   },
   methods: {
-    async editToDo(todo_id) {
+    async editToDo(todo_data) {
       await this.$store.dispatch('auth/edit', _.assign(
+          this.user, {todo: todo_data}
+        ))
+    },
+    async changeState(todo_id) {
+      await this.$store.dispatch('auth/changeState', _.assign(
           this.user, {todo_id: todo_id}
         ))
     },
