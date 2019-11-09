@@ -24,6 +24,9 @@ const actions = {
     const response = await axios.post('/api/register', data)
     if (response.data.error) return response.data.error
     context.commit('setUser', response.data)
+
+    const response2 = await axios.post('/api/tasks', response.data)
+    context.commit('setTasks', response2.data)
   },
   async login (context, data) {
     const response = await axios.post('/api/login', data)
