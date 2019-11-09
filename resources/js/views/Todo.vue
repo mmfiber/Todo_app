@@ -78,13 +78,11 @@ export default {
       await this.$store.dispatch('auth/edit', _.assign(
           this.user, {todo_id: todo_id}
         ))
-      this.$router.push('/todo')
     },
     async del(todo_id) {
       await this.$store.dispatch('auth/delete', _.assign(
           this.user, {todo_id: todo_id}
         ))
-      this.$router.push('/todo')
     },
     async create() {
       this.newTodo.deadline = this.$refs.datetime.datetime
