@@ -23,14 +23,6 @@
 </template>
 
 <style scoped>
-  .card{
-    position: relative;
-  }
-  .card > .v-card__actions{
-    position: absolute;
-    bottom: 0;
-    right: 0;
-  }
   .whiteText *{
     color: white !important;
   }

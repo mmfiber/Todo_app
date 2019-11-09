@@ -2,10 +2,14 @@
   BaseLayout(tab1="Todo" tab2="Done")
 
     template(v-slot:tab1)
-      v-btn.mt-3.mr-3.grey.lighten-4(@click.stop="dialog = true" rounded) 
-        v-icon(x-small) fa-plus
-        span.ml-3 Create
-      
+      v-row.justify-center
+        v-col(col=12 xs=12 md=8)
+          v-btn.mt-3.mr-3.grey.lighten-4(@click.stop="dialog = true" rounded) 
+            v-icon(x-small) fa-plus
+            span.ml-3 Create
+          template(v-for="t in todo")
+            TodoCard.mt-3(:data="t" @submit="editToDo" @delete="del" withCardColor=true btn_text="Done")
+
       v-dialog(v-model="dialog" max-width="600")
         v-card
           v-card-title Create ToDo
@@ -19,14 +23,12 @@
             v-col(col=12 xs=6)
               v-btn.primary(text large @click="create") Create
 
-      v-flex.justify-center
-        template(v-for="t in todo")
-          TodoCard.mt-3(:data="t" @submit="editToDo" @delete="del" withCardColor=true btn_text="Done")
-
     template(v-slot:tab2)
-      v-flex.justify-center
-        template(v-for="d in done")
-          TodoCard.mt-3(:data="d" @submit="editToDo" @delete="del" btn_text="ToDo")
+      v-row.justify-center
+        v-col(col=12 xs=12 md=8)
+          template(v-for="d in done")
+            TodoCard.mt-3(:data="d" @submit="editToDo" @delete="del" btn_text="ToDo")
+
 </template>
 
 <style scoped>
