@@ -15,9 +15,9 @@
 
     Dialog(v-model="editDialog" title="Edit"
         btnText="edit" btnColorClass="success" @cancel="cancel" @submit="edit")
-      .title {{ data.title }}
-      .content {{ data.content }}
-      .deadline {{ data.deadline }}
+      v-text-field(label="Title" v-model="editData.title" required)
+      v-text-field(label="Content" v-model="editData.content" required)
+      dateTimePicker(ref="datetime")
 
     Dialog(v-model="delDialog" title="Are you sure delete this?"
         btnText="delete" btnColorClass="error" @cancel="cancel" @submit="del")
@@ -42,10 +42,12 @@
 
 <script>
 import Dialog from"../components/Dialog.vue"
+import dateTimePicker from"../components/dateTimePicker.vue"
 
 export default {
   components: {
     Dialog,
+    dateTimePicker
   },
   props: {
     data: Object,
@@ -60,6 +62,7 @@ export default {
         threeDaysBefore: "#B3E5FC",
         others: "#F5F5F5"
       },
+      editData: JSON.parse(JSON.stringify(this.data)),
       cardColor: "#F5F5F5",
       isWhiteText: false,
       delDialog: false,
@@ -79,7 +82,8 @@ export default {
       this.getCardColor()
     },
     async edit() {
-      await this.$emit('edit', this.data)
+      this.editData.deadline = this.$refs.datetime.datetime
+      await this.$emit('edit', this.editData)
       this.editDialog = false
       this.getCardColor()
     },

@@ -21,6 +21,7 @@ Route::post('/tasks', 'TodoController@index')->name('tasks');
 Route::post('/edit', 'TodoController@edit')->name('edit');
 Route::post('/delete', 'TodoController@delete')->name('delete');
 Route::post('/createTodo', 'TodoController@create')->name('createTodo');
+Route::post('/changeState', 'TodoController@changeState')->name('changeState');
 Route::get('/user', function () {
   return Auth::user();
 })->name('user');
