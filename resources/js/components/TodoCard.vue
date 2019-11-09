@@ -95,6 +95,7 @@ export default {
     cancel() {
       this.delDialog = false
       this.editDialog = false
+      this.$refs.datetime.initDateAndTime()
     },
     getCardColor() {
       if (!this.withCardColor) return this.colors.others
