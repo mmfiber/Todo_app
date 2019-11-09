@@ -5,24 +5,36 @@
       .content {{ data.content }}
       .deadline {{ data.deadline }}
     v-card-actions(v-show="btn_text")
-      v-btn(text @click="dialog=true") delete
       v-btn(text @click="submit") {{ btn_text }}
 
-    v-dialog(v-model="dialog" max-width="600")
-      v-card
-        v-card-title Are you sure to delete this?
-        v-card-text
-          .title {{ data.title }}
-          .content {{ data.content }}
-          .deadline {{ data.deadline }}
-        v-card-actions
-          v-col(col=12 xs=6)
-            v-btn.grey.lighten-4(text large @click="cancel") Cancel
-          v-col(col=12 xs=6)
-            v-btn.error(text large @click="del") delete
+    .btn_container.pa-3
+      v-btn(text icon  @click="editDialog=true")
+        v-icon(x-small) fa-edit
+      v-btn(text icon  @click="delDialog=true")
+        v-icon(x-small) fa-trash-alt
+
+    Dialog(v-model="editDialog" title="Are you sure delete this?"
+        btnText="delete" btnColorClass="error" @cancel="cancel" @submit="del")
+      .title {{ data.title }}
+      .content {{ data.content }}
+      .deadline {{ data.deadline }}
+
+    Dialog(v-model="delDialog" title="Are you sure delete this?"
+        btnText="delete" btnColorClass="error" @cancel="cancel" @submit="del")
+      .title {{ data.title }}
+      .content {{ data.content }}
+      .deadline {{ data.deadline }}
 </template>
 
 <style scoped>
+  .card{
+    position: relative;
+  }
+  .btn_container{
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
   .whiteText *{
     color: white !important;
   }
@@ -39,7 +51,12 @@
 </style>
 
 <script>
+import Dialog from"../components/Dialog.vue"
+
 export default {
+  components: {
+    Dialog,
+  },
   props: {
     data: Object,
     btn_text: {type: String, default:""},
@@ -55,7 +72,8 @@ export default {
       },
       cardColor: "#F5F5F5",
       isWhiteText: false,
-      dialog: false,
+      delDialog: false,
+      editDialog: false,
     }
   },
   mounted() {
@@ -71,11 +89,17 @@ export default {
     },
     async del() {
       await this.$emit('delete', this.data.id)
-      this.dialog = false
+      this.delDialog = false
+      this.getCardColor()
+    },
+    async del() {
+      await this.$emit('edit', this.data.id)
+      this.editDialog = false
       this.getCardColor()
     },
     cancel() {
-      this.dialog = false
+      this.delDialog = false
+      this.editDialog = false
     },
     getCardColor() {
       if (!this.withCardColor) return this.colors.others
