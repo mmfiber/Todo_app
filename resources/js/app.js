@@ -10,6 +10,14 @@ import './bootstrap'
 const createApp = async () => {
   await store.dispatch('auth/currentUser')
 
+  router.beforeEach((to, from, next) => {
+    if (to.matched.some(record => record.meta.requiresAuth) && !store.state.auth.user) {
+      next({ path: '/login', query: { redirect: to.fullPath }});
+    } else {
+      next();
+    }
+  })
+
   new Vue({
     router,
     store,

@@ -13,7 +13,10 @@ const routes = [
   },
   {
     path: '/todo',
-    component: ToDo
+    component: ToDo,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/login',
