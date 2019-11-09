@@ -20,13 +20,22 @@ class TodoController extends Controller
     ];
   }
 
-  public function edit(Request $req) {
+  public function changeState(Request $req) {
     $task = Todo::find($req['todo_id']);
     $task->state = ($task->state + 1) % 2;
     $task->save();
     return $this->index($req);
   }
-  
+
+  public function edit(Request $req) {
+    $task = Todo::find($req['todo']['id']);
+    $task->title = $req['todo']['title'];
+    $task->content = $req['todo']['content'];
+    $task->deadline = $req['todo']['deadline'];
+    $task->save();
+    return $this->index($req);
+  }
+
   public function delete(Request $req) {
     Todo::destroy($req['todo_id']);
     return $this->index($req);

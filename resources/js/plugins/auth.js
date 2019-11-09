@@ -57,6 +57,10 @@ const actions = {
     const response = await axios.post('/api/createTodo', data)
     context.commit('setTasks', response.data)
   },
+  async changeState (context, data) {
+    const response = await axios.post('/api/changeState', data)
+    context.commit('setTasks', response.data)
+  },
 }
 
 export default {
