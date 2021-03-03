@@ -22,7 +22,7 @@
         "lodash": "^4.17.13",
         "material-design-icons-iconfont": "^5.0.1",
         "popper.js": "^1.12",
-        "pug": "^2.0.4",
+        "pug": "^3.0.1",
         "pug-loader": "^2.4.0",
         "pug-plain-loader": "^1.0.0",
         "resolve-url-loader": "^2.3.1",
